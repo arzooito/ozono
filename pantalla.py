@@ -1,5 +1,7 @@
 from tkinter import Tk, PhotoImage, Frame, Label
 from time import strftime
+import locale
+
 #import Modulos as MOD
 
 APAGADO = 0
@@ -20,18 +22,29 @@ msg_salida = MSG_VACIO
 state = APAGADO
 timer = VALOR_INICIAL
 buttonBlocked = False
+visible = True
 
+locale.setlocale(locale.LC_ALL, 'es-ES')
 #MOD.initGPIO()
 
 def mostrarHora():
-    clock['text'] = strftime('%H:%M:%S ')
+    clock['text'] = strftime('%H:%M:%S | %a, %d de %B')
     actualizarReloj()
 
 def actualizarReloj():
     clock.after(1000, mostrarHora)
 
 def abrirOpciones(event):
-    print('Abriendo opciones')
+	global visible
+
+	if visible:
+		lbl_alarm.pack_forget()
+		visible = False
+		print('Ocultando alarma')
+	else:
+		lbl_alarm.pack()
+		visible = True
+		print('Mostrando alarma')
 
 def onOffButtonClic(event):
 	if state == APAGADO and not buttonBlocked:
@@ -46,7 +59,7 @@ def encender():
 	global state, msg_salida
 	
 	state = ARRANCANDO
-	lblBoton.config(image = IMG_BUTTON_OFF)
+	lblBoton.config(image=IMG_BUTTON_OFF)
 	msg_salida = MSG_ARRANCANDO 
 	iniciarContador()
 	#MOD.moduloUnoOn()
@@ -56,7 +69,7 @@ def parar():
 	global state, msg_salida
 
 	state = PARANDO
-	lblBoton.config(image = IMG_BUTTON_DISABLED)
+	lblBoton.config(image=IMG_BUTTON_DISABLED)
 	msg_salida = MSG_PARANDO
 	iniciarContador()
 	#MOD.moduloDosOff()
@@ -99,46 +112,49 @@ def procesoCompletado():
 		lblMensaje['text'] = MSG_FIN_PARADA
 		lblMensaje.after(1500, pararContador)
 		state = APAGADO
-		lblBoton.config(image = IMG_BUTTON_ON)
-
+		lblBoton.config(image=IMG_BUTTON_ON)
 
 
 
 root = Tk()
-root.config(cursor = '', bg=BG)
+root.config(cursor='', bg=BG)
 #Para pantalla completa
 #root.attributes('-fullscreen', True)
 #Para eliminar el marco de la ventana    
 #root.overrideredirect(True)
 
-IMG_BUTTON_ON = PhotoImage(file = 'images/boton_on.png')
-IMG_BUTTON_OFF = PhotoImage(file = 'images/boton_off.png')
-IMG_BUTTON_DISABLED = PhotoImage(file = 'images/boton_disabled.png')
-IMG_OPTIONS = PhotoImage(file = 'images/ruleta32.png')
+IMG_BUTTON_ON = PhotoImage(file='images/boton_on.png')
+IMG_BUTTON_OFF = PhotoImage(file='images/boton_off.png')
+IMG_BUTTON_DISABLED = PhotoImage(file='images/boton_disabled.png')
+IMG_OPTIONS = PhotoImage(file='images/ruleta32.png')
+IMG_ALARM = PhotoImage(file='images/alarm32.png')
 
-toolbar = Frame(root, pady=10, padx=10, bg= 'green')
-toolbar.pack(fill= 'x')
+toolbar = Frame(root, pady=10, padx=10, bg=BG)
+toolbar.pack(fill='x')
 
 marco = Frame(root, bg=BG, pady=50)
-marco.pack(fill= 'both', expand= 1)
+marco.pack(fill='both', expand=1)
 
-clock = Label(toolbar, font=("","20"), padx= 10, bg= BG, fg="white")
-clock.pack(side= 'left')
+clock = Label(toolbar, font=("", "20"), padx=10, bg=BG, fg="white")
+clock.pack(side='left')
 
-lbl_options = Label(toolbar, image = IMG_OPTIONS, bg=BG)
+lbl_options = Label(toolbar, image=IMG_OPTIONS, bg=BG)
 lbl_options.bind('<Button-1>', abrirOpciones)
-lbl_options.pack(side = 'right')
+lbl_options.pack(side='right')
 
-lblBoton = Label(marco, image = IMG_BUTTON_ON, bg=BG)
+lbl_alarm = Label(toolbar, image=IMG_ALARM, bg=BG)
+lbl_alarm.pack()
+
+lblBoton = Label(marco, image=IMG_BUTTON_ON, bg=BG)
 lblBoton.bind('<Button-1>', onOffButtonClic)
-lblBoton.pack(anchor = 'center')
+lblBoton.pack(anchor='center')
 
 lblEspacio = Label(marco, bg=BG)
 lblEspacio.pack()
 
-lblMensaje = Label(marco, font=("","22"), bg=BG, fg="white")
-lblMensaje.config(width= "50")
-lblMensaje.pack(anchor = 'center')
+lblMensaje = Label(marco, font=("", "22"), bg=BG, fg="white")
+lblMensaje.config(width="50")
+lblMensaje.pack(anchor='center')
 
 actualizarReloj()
 
