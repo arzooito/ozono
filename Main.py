@@ -1,50 +1,14 @@
 from tkinter import Tk, PhotoImage, Frame, Label
-from time import strftime
-import locale
-
+from ClockToolbar import ClockToolbar as Toolbar
+from R import * #Constantes
 #import Modulos as MOD
 
-APAGADO = 0
-ENCENDIDO = 1
-ARRANCANDO = 2
-PARANDO = 3
-
-MSG_ARRANCANDO = 'Módulo A conectado, arrancando módulo B en '
-MSG_PARANDO = 'Módulo B desconectado, parando módulo A en '
-MSG_FIN_ARRANQUE = 'Arranque completo'
-MSG_FIN_PARADA = 'Parada completa'
-MSG_VACIO = ''
-
-BG = "slate blue"
-
-VALOR_INICIAL = 30
 msg_salida = MSG_VACIO
 state = APAGADO
 timer = VALOR_INICIAL
 buttonBlocked = False
-visible = True
 
-locale.setlocale(locale.LC_ALL, 'es-ES')
 #MOD.initGPIO()
-
-def mostrarHora():
-    clock['text'] = strftime('%H:%M:%S | %a, %d de %B')
-    actualizarReloj()
-
-def actualizarReloj():
-    clock.after(1000, mostrarHora)
-
-def abrirOpciones(event):
-	global visible
-
-	if visible:
-		lbl_alarm.pack_forget()
-		visible = False
-		print('Ocultando alarma')
-	else:
-		lbl_alarm.pack()
-		visible = True
-		print('Mostrando alarma')
 
 def onOffButtonClic(event):
 	if state == APAGADO and not buttonBlocked:
@@ -126,24 +90,11 @@ root.config(cursor='', bg=BG)
 IMG_BUTTON_ON = PhotoImage(file='images/boton_on.png')
 IMG_BUTTON_OFF = PhotoImage(file='images/boton_off.png')
 IMG_BUTTON_DISABLED = PhotoImage(file='images/boton_disabled.png')
-IMG_OPTIONS = PhotoImage(file='images/ruleta32.png')
-IMG_ALARM = PhotoImage(file='images/alarm32.png')
 
-toolbar = Frame(root, pady=10, padx=10, bg=BG)
-toolbar.pack(fill='x')
+toolbar = Toolbar(root, BG)
 
 marco = Frame(root, bg=BG, pady=50)
 marco.pack(fill='both', expand=1)
-
-clock = Label(toolbar, font=("", "20"), padx=10, bg=BG, fg="white")
-clock.pack(side='left')
-
-lbl_options = Label(toolbar, image=IMG_OPTIONS, bg=BG)
-lbl_options.bind('<Button-1>', abrirOpciones)
-lbl_options.pack(side='right')
-
-lbl_alarm = Label(toolbar, image=IMG_ALARM, bg=BG)
-lbl_alarm.pack()
 
 lblBoton = Label(marco, image=IMG_BUTTON_ON, bg=BG)
 lblBoton.bind('<Button-1>', onOffButtonClic)
@@ -155,7 +106,5 @@ lblEspacio.pack()
 lblMensaje = Label(marco, font=("", "22"), bg=BG, fg="white")
 lblMensaje.config(width="50")
 lblMensaje.pack(anchor='center')
-
-actualizarReloj()
 
 root.mainloop()
