@@ -1,21 +1,23 @@
 import RPi.GPIO as GPIO
 
+PIN_A = 17
+PIN_B = 18
 
 def initGPIO():
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(17, GPIO.OUT)
-    GPIO.setup(18, GPIO.OUT)
+    GPIO.setup(PIN_A, GPIO.OUT)
+    GPIO.setup(PIN_B, GPIO.OUT)
     moduloUnoOff()
     moduloDosOff()
 
 def moduloUnoOn():
-    GPIO.output(17, GPIO.LOW)
+    GPIO.output(PIN_A, GPIO.LOW)
 
 def moduloUnoOff():
-    GPIO.output(17, GPIO.HIGH)
+    GPIO.output(PIN_A, GPIO.HIGH)
 
 def moduloDosOn():
-    GPIO.output(18, GPIO.LOW)
+    GPIO.output(PIN_B, GPIO.LOW)
 
 def moduloDosOff():
-    GPIO.output(18, GPIO.HIGH)
+    GPIO.output(PIN_B, GPIO.HIGH)
