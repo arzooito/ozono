@@ -18,13 +18,11 @@ class Modulo:
         GPIO.output(self.pin, self.estado)
 
     def on(self):
-        global ACTIVADO
-        self.estado = ACTIVADO
+        self.estado = Modulo.ACTIVADO
         GPIO.output(self.pin, self.estado)
 
     def off(self):
-        global DESACTIVADO
-        self.estado = DESACTIVADO
+        self.estado = Modulo.DESACTIVADO
         GPIO.output(self.pin, self.estado)
 
 

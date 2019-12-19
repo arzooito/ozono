@@ -4,8 +4,8 @@ ENCENDIDO = 1
 ARRANCANDO = 2
 PARANDO = 3
 
-MSG_ARRANCANDO = 'Módulo A conectado, arrancando módulo B en '
-MSG_PARANDO = 'Módulo B desconectado, parando módulo A en '
+MSG_ARRANCANDO = '{} conectado, arrancando {} en '
+MSG_PARANDO = '{} desconectado, parando {} en '
 MSG_FIN_ARRANQUE = 'Arranque completo'
 MSG_FIN_PARADA = 'Parada completa'
 MSG_VACIO = ''
