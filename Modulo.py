@@ -25,4 +25,5 @@ class Modulo:
         self.estado = Modulo.DESACTIVADO
         GPIO.output(self.pin, self.estado)
 
-
+    def __str__(self):
+        return self.nombre
