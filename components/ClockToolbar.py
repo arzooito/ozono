@@ -1,5 +1,5 @@
 from tkinter import PhotoImage, Frame, Label
-from ClockLabel import Clock
+from components.ClockLabel import Clock
 
 IMG_OPTIONS_PATH = 'images/ruleta32.png'
 IMG_ALARM_PATH = 'images/alarm32.png'

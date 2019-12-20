@@ -1,5 +1,5 @@
 from tkinter import Tk, PhotoImage, Frame, Label
-from ClockToolbar import ClockToolbar as Toolbar
+from components.ClockToolbar import ClockToolbar as Toolbar
 import R #Constantes
 #import Modulos as MOD
 
