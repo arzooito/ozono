@@ -25,13 +25,11 @@ class ControladorArranque:
 
     def on_off_button_click(self, event):
         if self.state == R.APAGADO and not self.button_blocked:
-            accion = self.encender
+            self.encender()
         elif self.state == R.ENCENDIDO and not self.button_blocked:
-            accion = self.parar
+            self.parar()
         elif self.state == R.ARRANCANDO and not self.button_blocked:
-            accion = self.parar
-
-        accion()
+            self.parar()
 
     def encender(self):
         self.state = R.ARRANCANDO
@@ -39,7 +37,6 @@ class ControladorArranque:
         self.msg_salida = R.MSG_ARRANCANDO.format(self.modulos[MODULO_A], self.modulos[MODULO_B])
         self.iniciar_contador()
         # self.modulos[MODULO_A].on()
-        return self.state
 
     def parar(self):
         self.state = R.PARANDO
@@ -47,7 +44,6 @@ class ControladorArranque:
         self.msg_salida = R.MSG_PARANDO.format(self.modulos[MODULO_B], self.modulos[MODULO_A])
         self.iniciar_contador()
         # self.modulos[MODULO_B].off()
-        return self.state
 
     def iniciar_contador(self, contador=R.VALOR_INICIAL):
         self.parar_contador()

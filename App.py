@@ -1,4 +1,4 @@
-from PantallaPrincipal import PantallaPrincipal
+from view.PantallaPrincipal import PantallaPrincipal
 from ControlArranque import ControladorArranque
 
 

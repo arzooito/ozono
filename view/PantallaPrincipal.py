@@ -1,16 +1,14 @@
 from tkinter import Tk, PhotoImage, Frame, Label
-from components.ClockToolbar import ClockToolbar as Toolbar
-import R
+from view.components.ClockToolbar import ClockToolbar as Toolbar
 
 BG = "slate blue"
-IMG_BUTTON_ON_PATH = 'images/boton_on.png'
-IMG_BUTTON_OFF_PATH = 'images/boton_off.png'
-IMG_BUTTON_DISABLED_PATH = 'images/boton_disabled.png'
+IMG_BUTTON_ON_PATH = 'resources/images/boton_on.png'
+IMG_BUTTON_OFF_PATH = 'resources/images/boton_off.png'
+IMG_BUTTON_DISABLED_PATH = 'resources/images/boton_disabled.png'
 
 
 class PantallaPrincipal(Tk):
-
-
+    """Controlador de pantalla principal"""
 
     def __init__(self):
         super().__init__()

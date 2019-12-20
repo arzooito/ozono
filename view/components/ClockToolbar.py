@@ -1,8 +1,8 @@
 from tkinter import PhotoImage, Frame, Label
-from components.ClockLabel import Clock
+from view.components.ClockLabel import Clock
 
-IMG_OPTIONS_PATH = 'images/ruleta32.png'
-IMG_ALARM_PATH = 'images/alarm32.png'
+IMG_OPTIONS_PATH = 'resources/images/components/ruleta32.png'
+IMG_ALARM_PATH = 'resources/images/components/alarm32.png'
 
 
 class ClockToolbar(Frame):
