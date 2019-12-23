@@ -1,5 +1,7 @@
 from tkinter import Tk, PhotoImage, Frame, Label
 from view.components.ClockToolbar import ClockToolbar as Toolbar
+from view.components.OptionsFrame import OptionsFrame
+
 
 BG = "slate blue"
 IMG_BUTTON_ON_PATH = 'resources/images/boton_on.png'
@@ -26,6 +28,8 @@ class PantallaPrincipal(Tk):
 
         self.marco = Frame(self, bg=BG, pady=50)
         self.marco.pack(fill='both', expand=1)
+
+        self.pantalla_prog = OptionsFrame(self, bg=BG, pady=50)
 
         self.lblBoton = Label(self.marco, image=self.IMG_BUTTON_ON, bg=BG)
         self.lblBoton.pack(anchor='center')

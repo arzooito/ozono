@@ -1,4 +1,5 @@
 import R
+from tkinter import FLAT, SUNKEN
 # from Modulo import Modulo
 
 MODULO_A = 0
@@ -14,14 +15,23 @@ class ControladorArranque:
         self.pantalla = pantalla
         self.timer = R.VALOR_INICIAL
 
+        self.boton_on_off = self.pantalla.lblBoton
+        self.boton_on_off.bind('<Button-1>', self.on_off_button_click)
+
+        self.boton_opciones = self.pantalla.toolbar.lbl_options_button
+        self.boton_opciones.bind('<Button-1>', self.abrir_pantalla_prog)
+
+        self.marco_inicio = self.pantalla.marco
+        self.marco_programa = self.pantalla.pantalla_prog
+
+        self.marco_inicial_visible = True
+
         self.modulos = [
             # Modulo('Módulo A', 17),
             # Modulo('Módulo B', 18)
             'Módulo A',
             'Módulo B'
         ]
-
-        self.pantalla.lblBoton.bind('<Button-1>', self.on_off_button_click)
 
     def on_off_button_click(self, event):
         if self.state == R.APAGADO and not self.button_blocked:
@@ -33,14 +43,14 @@ class ControladorArranque:
 
     def encender(self):
         self.state = R.ARRANCANDO
-        self.pantalla.lblBoton.config(image=self.pantalla.IMG_BUTTON_OFF)
+        self.boton_on_off.config(image=self.pantalla.IMG_BUTTON_OFF)
         self.msg_salida = R.MSG_ARRANCANDO.format(self.modulos[MODULO_A], self.modulos[MODULO_B])
         self.iniciar_contador()
         # self.modulos[MODULO_A].on()
 
     def parar(self):
         self.state = R.PARANDO
-        self.pantalla.lblBoton.config(image=self.pantalla.IMG_BUTTON_DISABLED)
+        self.boton_on_off.config(image=self.pantalla.IMG_BUTTON_DISABLED)
         self.msg_salida = R.MSG_PARANDO.format(self.modulos[MODULO_B], self.modulos[MODULO_A])
         self.iniciar_contador()
         # self.modulos[MODULO_B].off()
@@ -76,3 +86,18 @@ class ControladorArranque:
             self.pantalla.lblMensaje.after(1500, self.parar_contador)
             self.state = R.APAGADO
             self.pantalla.lblBoton.config(image=self.pantalla.IMG_BUTTON_ON)
+
+    def abrir_pantalla_prog(self, event):
+        if self.marco_inicial_visible:
+            width = self.marco_inicio.winfo_width()
+            height = self.marco_inicio.winfo_height()
+            self.marco_inicio.pack_forget()
+            self.marco_programa.config(width=width, height=height)
+            self.marco_programa.pack(fill='both', expand=1)
+            self.boton_opciones.config(relief=SUNKEN)
+            self.marco_inicial_visible = False
+        else:
+            self.marco_inicio.pack()
+            self.marco_programa.pack_forget()
+            self.boton_opciones.config(relief=FLAT)
+            self.marco_inicial_visible = True
